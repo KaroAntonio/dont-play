@@ -1,0 +1,12 @@
+body,html { margin: 0px; border: 0px; }
+
+#loading {
+	position: absolute;
+	right: 50vw;
+	top: 20vh;
+	width: 40px;
+	height: 40px;
+	z-index: 1000000; /* the highest */
+}
+
+
