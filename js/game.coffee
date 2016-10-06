@@ -4,18 +4,11 @@ window.init_game = (w, h) ->
 	# objs locations are in pixels, where the top left is 0,0
 	# sprite keys are unique
 	#
+	#
+	n = 1
 	game_objs = {
 		sprites:
-			pineapple: init_obj(w * 0.25, h / 2, 50, "red", 2, "chaser")
-			gourd: init_obj(w * 0.3, h / 2, 50, "red", 2, "chaser")
-			orange: init_obj(w * 0.4, h / 2, 50, "red", 2, "chaser")
-			pear: init_obj(w * 0.75, h / 2, 50, "red", 2, "chaser")
-			grape: init_obj(w * 0.75, h *0.75, 50, "red", 2, "chaser")
-			apple: init_obj(w * 0.9, h *0.75, 50, "red", 2, "chaser")
-			muffin: init_obj(w * 0.75, h / 2, 50, "blue", 2, "runner")
-			cupcake: init_obj( w * 0.25, h / 2, 50, "blue", 2, "runner")
-			scone: init_obj( w * 0.25, h *0.25, 50, "blue", 2, "runner")
-			dante: init_obj(w / 2, h / 2, 50, "black", 10, "player")
+			dante: init_obj(w / 2, h / 2, 30, "black", "player")
 		forces:[	# force functions accept distance and the object the force is acting on
 			[ "runner", "runner", mob_repulsion ],
 			[ "runner", "chaser", mob_repulsion ],
@@ -26,23 +19,30 @@ window.init_game = (w, h) ->
 			[ "runner", "chaser", chaser_attraction ]
 		]
 
-		time: get_time()
+		start: get_time()
 		w: w
 		h: h
 		mouseX: w / 2
 		mouseY: h / 2
 		friction: 0.95
+		score:0
 		t:0  # update count
+		hit_ctr: 0 # hit ctr
+		n_run: n # remaining runners
+		max_run: n  # max runners
 	}
+	init_mobs(game_objs, 3, 'rand', 'chaser')
+	init_mobs(game_objs, game_objs.n_run, 'rand', 'runner')
 	game_objs
 
 # FORCES
 # go: game_objs
 # d: distance
+# TODO randomize force params for every game
 ep = 0.0000001 #epsilon, a small number
 mob_repulsion = (go,d) -> 1 * Math.pow(1 / (d+ep), 1/2)*0.4
 #runner_repulsion = (go,d) -> 1 * Math.pow(1 / (d/size(go)*0.5+ep), 1.2)*0.001
-runner_repulsion = (go,d) -> 0.55
+runner_repulsion = (go,d) -> 0.6
 chaser_attraction = (go,d) -> -0.3
 
 # size of the screen diagonally
@@ -50,12 +50,69 @@ size = (go) -> point_distance(0,0,go.w,go.w)
 	
 window.update = (game_objs) ->
 	game_objs.t += 1
+	game_objs.hit_ctr--
+	console.log game_objs.hit_ctr
+	detect_end game_objs
 	apply_forces game_objs
 	apply_friction game_objs
 	move_dante game_objs
 	move_sprites game_objs
+	detect_hits game_objs
 	#move_chasers game_objs
 	#move_runners game_objs
+
+detect_end = (go) ->
+	test_pairs = get_pairs(go, 'runner','chaser')
+	if not go.n_run
+		go.sprites = {
+			dante: init_obj(go.w / 2, go.h / 2, 30, "black", "player")
+		}
+		go.max_run = Math.ceil(go.max_run*1.18)
+		go.n_run = go.max_run
+		init_mobs(go, 3, 'rand', 'chaser')
+		init_mobs(go, go.n_run, 'rand', 'runner')
+		init_graphics( go )
+	
+init_mobs = (go, n, m, t ) ->
+	#m: mode {'rand',}
+	# t: type {'runner','chaser'
+	
+	c = if (t == 'runner') then 'blue' else 'red'
+
+	for i in [1..n]
+		if m == 'rand'
+			[cx,cy] = [go.w*Math.random(), go.h * Math.random()]
+			r = Math.random()*40 + 5
+		else console.log 'no mode set'
+		go.sprites[t+'_'+i] = init_obj(cx,cy, r, c, t)
+
+detect_hits = (go) ->
+	sprites = go.sprites
+	p = go.sprites.dante
+	for name of sprites
+		sprite = sprites[name]
+		[x1,y1,x2,y2] = [sprite.cx,sprite.cy, p.cx, p.cy]
+		d = point_distance(x1,y1,x2,y2)
+		if d < (sprite.r/2+p.r/2) and go.hit_ctr <= 0 and name != 'dante'
+			hit(go, sprite)
+
+hit = (go,sprite) ->
+	go.hit_ctr = 1
+	go.hit_img = sprite.img
+
+	if sprite.type == 'runner'
+		sprite.type = 'chaser'
+		sprite.img = 'red'
+		go.n_run--
+		go.sprites.dante.r += 5
+		go.score += 5
+
+	if sprite.type == 'chaser'
+		p = go.sprites.dante
+		p.r-- if p.r > 5
+		go.score--
+
+
 
 zero_forces = (game_objs) ->
 	for name of game_objs['sprites']
@@ -99,7 +156,7 @@ apply_forces = (game_objs) ->
 	for f in forces
 		pairs = get_pairs(game_objs,f[0],f[1])
 		for pair in pairs
-			apply_force(game_objs, pair, f[2])
+			apply_force(game_objs, pair, f[2]) if pair[0]? and pair[1]?
 
 apply_friction = (go) ->
 	sprites = go['sprites']
@@ -127,12 +184,11 @@ get_time = ->
 	d = new Date()
 	d.getTime()
 
-init_obj = (cx, cy, r, img, s, type) ->
+init_obj = (cx, cy, r, img, type) ->
   cx: cx
   cy: cy
   r: r
   img: img
-  s: s # speed
   type: type
   dvx: 0 	# delta velocity x
   dvy: 0
@@ -155,22 +211,3 @@ move_sprites = (game_objs) ->
 		sprite.dvx = 0
 		sprite.dvy = 0
 
-move_group = (game_objs, group_name, dv) ->
-  # move members of group towards or away from dante	
-  dante = game_objs["sprites"]["dante"]
-  group = get_sprite_group(game_objs, group_name)
-  for name of group
-    member = group[name]
-    dx = dv * (dante["cx"] - member["cx"])
-    dy = dv * (dante["cy"] - member["cy"])
-    dist = point_distance(member["cx"], member["cy"], dante["cx"], dante["cy"])
-    member["cx"] += (dx / dist) * member["s"]
-    member["cy"] += (dy / dist) * member["s"]
-
-move_chasers = (game_objs) ->
-  # chasers move towards dante
-  move_group game_objs, "chaser", +1
-
-move_runners = (game_objs) ->
-  # chasers move towards dante
-  move_group game_objs, "runner", -1
