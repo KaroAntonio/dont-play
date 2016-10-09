@@ -62,11 +62,11 @@
   };
 
   run_run = function(go, d) {
-    return mob_mob(go, d) * 5;
+    return mob_mob(go, d) + 0.1;
   };
 
   cha_pla = function(go, d) {
-    return -0.9;
+    return -0.9 - Math.pow(1 / (d + ep), 1 / 2);
   };
 
   mob_rep = function(go, d) {
@@ -94,7 +94,7 @@
 
   init_listeners = function(go) {
     var handler;
-    $(window).mousemove(function(e) {
+    $(document).mousemove(function(e) {
       go['mouseX'] = e.clientX;
       return go['mouseY'] = e.clientY;
     });
@@ -210,7 +210,7 @@
     s.sort();
     id = s[0].name + s[1].name;
     if (f[3] === 'one_way' || (f[3] === 'two_way' && indexOf.call(go.force_ids, id) < 0)) {
-      go.force_ids[name];
+      go.force_ids[id] = 0;
       return go.force_pairs.push([pair[0], pair[1], f[2]]);
     }
   };
@@ -439,14 +439,11 @@
     f = force(go, d);
     v1.dvx += dx / d * f;
     v1.dvy += dy / d * f;
-    if (mode === 'two_way') {
-      v1.dvx -= dx / d * f;
-      return v1.dvy -= dy / d * f;
-    }
+    return 'if mode == \'two_way\'\n	v1.dvx -= dx/d * f\n	v1.dvy -= dy/d * f';
   };
 
   apply_forces = function(go) {
-    var f, fp, j, k, len, len1, m, modes, ref, ref1, results;
+    var f, fp, j, k, len, len1, modes, ref, ref1, results;
     zero_velocities(go);
     modes = {};
     ref = go.forces;
@@ -458,12 +455,7 @@
     results = [];
     for (k = 0, len1 = ref1.length; k < len1; k++) {
       fp = ref1[k];
-      m = modes[fp[0] + fp[1]];
-      if ((fp[0] != null) && (fp[1] != null)) {
-        results.push(apply_force(go, fp.slice(0, 2), fp[2], m));
-      } else {
-        results.push(void 0);
-      }
+      results.push(apply_force(go, fp.slice(0, 2), fp[2]));
     }
     return results;
   };
@@ -513,7 +505,8 @@
       dvx: 0,
       dvy: 0,
       vx: 0,
-      vy: 0
+      vy: 0,
+      opacity: 1
     };
   };
 

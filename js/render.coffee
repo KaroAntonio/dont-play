@@ -1,16 +1,95 @@
 window.init_graphics = (go) ->
-	# probably only necessary if we're using html as the graphics
 
+	if not go.three?
+		init_three go
+
+	init_bg go
+	init_score go
+	init_info go
+	init_msg go
+	#init_sprite_divs go
+	init_sprite_cubes go
+	init_body go
+	#fade_dead_sprites go
+	fade_dead_cubes go
+
+init_three = (go) ->
+	three_div = $('<div>')
+	three_div.css
+		margin: 0
+		position: 'fixed'
+		zIndex: -2
+
+	three_div.appendTo('body')
+
+	camera = new THREE.PerspectiveCamera 90, window.innerWidth / window.innerHeight, 0.1, 10000
+	#camera = new THREE.OrthographicCamera -go.w/2, go.w/2,-go.h/2, go.h/2, 0.1, 10000
+	renderer = new THREE.WebGLRenderer
+		antialias: true
+		alpha: true
+
+	scene = new THREE.Scene()
+	scene.background = new THREE.Color( 0xff0000 )
+
+	camera.position.z = 300
+	camera.lookAt new THREE.Vector3 0, 0, 0
+
+	scene.add camera
+
+	renderer.setSize window.innerWidth, window.innerHeight
+	three_div.append renderer.domElement
+
+	Light1 = new THREE.PointLight 0xffffff, 1
+	Light1.position.x = 1500
+	Light1.position.z = 4000
+	scene.add Light1
+
+	go['three'] =
+		div:three_div
+		camera:camera
+		scene:scene
+		renderer: renderer
+
+init_color = (s) ->
+	c = new THREE.MeshPhongMaterial
+		color: s.img
+		specular : s.img
+		emissive : s.img
+		shininess: 5
+		transparent: true
+		opacity: s.opacity
+		shading: THREE.FlatShading
+		
+init_sprite_cube = (go,name) ->
+	s = go["sprites"][name]
+
+	r = go.max_r
+	cube = new THREE.Mesh new THREE.BoxGeometry(r,r,10), init_color(s)
+
+	go.three.scene.add cube
+
+	s["cube"] = cube
+
+init_sprite_cubes = (go) ->
+	for name of go.sprites
+		init_sprite_cube(go,name)
+
+init_sprite_divs = (go) ->
+	# init_sprite reps
 	for name of go["sprites"]
 		init_sprite_div(go,name)
 
+init_body = (go) ->
+	$('body').css
+		fontFamily: 'monospace'
+		position: 'fixed'
+
+init_score = (go) ->
 	if go.hud?
 		go.hud.score.remove()
 
-	$('body').css
-		fontFamily: 'monospace'
-	
 	score = $("<div>")
+	score.appendTo 'body'
 	score.css
 		position: "fixed"
 		height: 50
@@ -19,19 +98,12 @@ window.init_graphics = (go) ->
 		top: go.h-50
 		fontSize: 20
 
-	score.appendTo 'body'
+	go['hud'] =
+		score: score
 
-	go['hud'] = { score: score }
-
-	# BACKGROUND
-	$('body').css
-		position: 'fixed'
-
-	n_bg_imgs = 2
-	
+init_bg = (go) ->
 	if go.bg?
 		go.bg.remove()
-	i = Math.floor(Math.random() * n_bg_imgs)
 	bg = $("<div>")
 	bg.appendTo 'body'
 	go.bg = bg
@@ -41,16 +113,15 @@ window.init_graphics = (go) ->
 		width: "100vw"
 		zIndex: -100
 
-	fade_dead_sprites go
-	init_info go
-	init_msg go
-
 window.render = (go) ->
 	render_background go
-	render_sprites go
+	#render_sprites go
+	render_cubes go
 	render_hud go
 	render_info go
 	render_msg go
+
+	go.three.renderer.render go.three.scene, go.three.camera
 
 init_msg = (go) ->
 	if not go.msg?
@@ -117,6 +188,14 @@ render_info = (go) ->
 		go.info.css
 			zIndex: -101
 
+fade_dead_cubes = (go) ->
+	for name of go.dead_sprites
+		s = go.dead_sprites[name]
+		if s.cube?
+			s.cube.position.z -= 5
+			s.cube.scale.z = 0.001
+			s.opacity *= 0.7
+			s.cube.material = init_color(s)
 
 fade_dead_sprites = (go) ->
 	for name of go.dead_sprites
@@ -150,6 +229,33 @@ render_background = (go) ->
 
 render_hud = (go) ->
 	go.hud.score.text(go.score + '//'+ go.sprites.dante.r + '//' + go.n_run)
+
+render_cubes = (go) ->
+	for name of go["sprites"]
+		s = go["sprites"][name]
+		if not s.cube?
+			init_sprite_cube(go,name)
+
+		cube = s.cube
+		if name == 'hit'
+			s = go.sprites.dante
+			
+		cube.position.x = s.cx-go.w/2
+		cube.position.y = -(s.cy-go.h/2)
+		cube.material = init_color(s)
+
+		cs = s.r/go.max_r
+		if name is 'hit'
+			if go.hit_ctr > 0
+				cs = (s.r+20)/go.max_r
+			else
+				cs = 0
+		cube.scale.set(cs,cs,cs)
+
+		if s.type in ['repulsor','attractor','seed']
+			#what to do here
+			cube.scale.z=0.0001
+			cube.position.z = -1
 
 render_sprites = (go) ->
 	for name of go["sprites"]

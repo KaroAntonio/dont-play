@@ -67,8 +67,8 @@ run_pla = (go,d) ->
 	else f = -0.3
 
 run_cha = (go,d) -> -0.8
-run_run = (go,d) -> mob_mob(go,d)*5
-cha_pla = (go,d) -> -0.9
+run_run = (go,d) -> mob_mob(go,d)+0.1
+cha_pla = (go,d) -> -0.9 - Math.pow(1 / (d+ep), 1/2)
 mob_rep = (go,d) -> Math.pow(1 / (d/10+ep), 1/2)*0.8
 mob_att = (go,d) -> -0.3
 
@@ -85,9 +85,9 @@ init_colors = () ->
 
 init_listeners = (go) ->
 	# mouse listener
-	$(window).mousemove (e) ->
-        go['mouseX'] = e.clientX
-        go['mouseY'] = e.clientY
+	$(document).mousemove (e) ->
+		go['mouseX'] = e.clientX
+		go['mouseY'] = e.clientY
 
 	# keyboard listener
 	handler = (e) ->
@@ -166,8 +166,8 @@ add_force_pair = (go, f, pair) ->
 	s.sort()
 	id = s[0].name + s[1].name
 	if f[3] is 'one_way' or (f[3] is 'two_way' and id not in go.force_ids)
-		go.force_ids[name]
-		go.force_pairs.push [pair[0],pair[1],f[2]]
+		go.force_ids[id] = 0
+		go.force_pairs.push [pair[0],pair[1],f[2], ]
 
 add_force_pairs = (go, sprite) ->
 	# add the relevant force pairs for a sprite
@@ -224,7 +224,7 @@ spawn_mob = (go, t ) ->
 restart = (go) ->
 	# clean up current level
 	for name of go.sprites
-		go.dead_sprites[name+'_'+go.t] = go.sprites[name]
+		go.dead_sprites[name+'_'+go.t] =go.sprites[name]
 
 	go.sprites = init_sprites(go.w, go.h, go.init_r)
 	go.colors = init_colors()
@@ -307,9 +307,11 @@ apply_force = (go, pair, force, mode) ->
 	f = force(go,d)
 	v1.dvx += dx/d * f
 	v1.dvy += dy/d * f
+	'''
 	if mode == 'two_way'
 		v1.dvx -= dx/d * f
 		v1.dvy -= dy/d * f
+		'''
 
 apply_forces = (go) ->
 	# apply forces to corresponding sprites
@@ -321,8 +323,7 @@ apply_forces = (go) ->
 		modes[f[0]+f[1]] = f[3]
 	
 	for fp in go.force_pairs
-		m = modes[fp[0]+fp[1]]
-		apply_force(go, fp[0..1], fp[2], m) if fp[0]? and fp[1]?
+		apply_force(go, fp[0..1], fp[2]) 
 
 apply_friction = (go) ->
 	sprites = go['sprites']
@@ -356,6 +357,7 @@ init_sprite = (name, cx, cy, r, img, type) ->
 	dvy: 0
 	vx: 0 	# velocity x
 	vy: 0
+	opacity: 1
 
 move_dante = (go) ->
   dante = go["sprites"]["dante"]
