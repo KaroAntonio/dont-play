@@ -1,2 +1,92 @@
-5:02:25 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-5:02:25 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:19:06 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:19:06 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+11:19:38 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:20:06 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:20:25 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:20:30 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:20:56 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:21:03 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:21:10 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:22:55 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:23:15 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:23:19 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:23:37 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:23:41 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:24:06 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:24:27 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:24:28 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:31:40 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+/Users/karoantonio/Documents/git/dont-play/js/game.coffee:377:13: error: decimal literal '0123456789' must not be prefixed with '0'
+	letters = '0123456789ABCDEF'
+	           ^^^^^^^^^^
+11:32:19 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:32:22 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:32:27 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:32:28 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:35:04 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:35:31 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:35:34 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+/Users/karoantonio/Documents/git/dont-play/js/game.coffee:164:4: error: unexpected if
+			if id not in go.force_ids
+			^^
+11:36:11 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:36:29 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:37:37 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:37:43 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:38:58 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:39:09 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:39:27 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:39:35 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:40:23 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+/Users/karoantonio/Documents/git/dont-play/js/game.coffee:162:20: error: unexpected indentation
+		for pair in pairs
+		                 
+/Users/karoantonio/Documents/git/dont-play/js/game.coffee:162:20: error: unexpected indentation
+		for pair in pairs
+		                 
+/Users/karoantonio/Documents/git/dont-play/js/game.coffee:162:20: error: unexpected indentation
+		for pair in pairs
+		                 
+/Users/karoantonio/Documents/git/dont-play/js/game.coffee:162:20: error: unexpected indentation
+		for pair in pairs
+		                 
+/Users/karoantonio/Documents/git/dont-play/js/game.coffee:162:20: error: unexpected indentation
+		for pair in pairs
+		                 
+11:42:04 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:42:05 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:42:30 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:42:32 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:42:32 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:42:51 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:42:59 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:43:07 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:43:52 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:43:56 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:43:57 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:44:10 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:45:48 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:46:21 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:46:28 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:50:19 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:50:31 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:51:33 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:52:49 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:57:41 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+11:58:58 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:00:14 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:00:34 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:05:45 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:05:48 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:07:58 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:08:12 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:08:29 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:08:32 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:11:01 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:11:03 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:11:15 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:11:16 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:11:17 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:11:55 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:11:56 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:11:57 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee

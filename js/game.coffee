@@ -5,7 +5,7 @@ window.init_game = (w, h) ->
 	# sprite keys are unique
 	#
 	#
-	n = 15
+	n = 1
 	size = 30
 	# game objects
 	go =
@@ -41,19 +41,18 @@ window.init_game = (w, h) ->
 init_forces = (go) ->
 	# force functions accept distance and the object the force is acting on
 	[
-			[ "runner", "runner", run_run ]
-			#[ "runner", "chaser", mob_mob ]
-			[ "chaser", "runner", mob_mob ]
-			[ "chaser", "chaser", mob_mob ]
-			[ "runner", "chaser", run_cha ]
-			[ "runner", "player", run_pla ]
-			[ "chaser", "player", cha_pla ]
-			[ "chaser", "repulsor", mob_rep ]
-			[ "runner", "repulsor", run_pla ]
-			[ "runner", "attractor", mob_att ]
-			[ "chaser", "attractor", mob_att ]
-			[ "chaser", "seed", cha_pla ]
-			[ "runner", "seed", cha_pla ]
+			[ "runner", "runner", run_run, 'two_way' ]
+			[ "chaser", "runner", mob_mob, 'two_way' ]
+			[ "chaser", "chaser", mob_mob, 'two_way' ]
+			[ "runner", "chaser", run_cha, 'one_way' ]
+			[ "runner", "player", run_pla, 'one_way'  ]
+			[ "chaser", "player", cha_pla, 'one_way' ]
+			[ "chaser", "repulsor", mob_rep, 'one_way' ]
+			[ "runner", "repulsor", run_pla, 'one_way' ]
+			[ "runner", "attractor", mob_att, 'one_way' ]
+			[ "chaser", "attractor", mob_att, 'one_way' ]
+			[ "chaser", "seed", cha_pla, 'one_way' ]
+			[ "runner", "seed", cha_pla, 'one_way' ]
 	]
 	
 # FORCES
@@ -155,12 +154,20 @@ build_fields = (go) ->
 	go.types = types
 
 build_force_pairs = (go) ->
-	force_pairs = []
+	go['force_pairs'] = []
+	go['force_ids'] = {}
 	for f in go.forces
 		pairs = get_pairs(go,f[0],f[1])
 		for pair in pairs
-			force_pairs.push [pair[0],pair[1],f[2]]
-	go['force_pairs'] = force_pairs
+			add_force_pair(go,f,pair)
+
+add_force_pair = (go, f, pair) ->
+	s = f[0..1]
+	s.sort()
+	id = s[0].name + s[1].name
+	if f[3] is 'one_way' or (f[3] is 'two_way' and id not in go.force_ids)
+		go.force_ids[name]
+		go.force_pairs.push [pair[0],pair[1],f[2]]
 
 add_force_pairs = (go, sprite) ->
 	# add the relevant force pairs for a sprite
@@ -168,11 +175,11 @@ add_force_pairs = (go, sprite) ->
 		if f[0] == sprite.type
 			pairs = get_pairs(go, sprite.name, f[1])
 			for pair in pairs
-				go.force_pairs.push [pair[0],pair[1],f[2]]
+				add_force_pair(go,f,pair)
 		if f[1] == sprite.type
 			pairs = get_pairs(go,f[0], sprite.name)
 			for pair in pairs
-				go.force_pairs.push [pair[0],pair[1],f[2]]
+				add_force_pair(go,f,pair)
 
 del_force_pairs = (go, sprite) ->
 	i = go.force_pairs.length
@@ -290,7 +297,7 @@ get_pairs = (go, from_node, to_node) ->
 				pairs.push [fn,tn]
 	pairs
 
-apply_force = (go, pair, force) ->
+apply_force = (go, pair, force, mode) ->
 	v1 = pair[0]
 	v2 = pair[1]
 	d = point_distance(v1.cx,v1.cy, v2.cx,v2.cy)
@@ -300,14 +307,22 @@ apply_force = (go, pair, force) ->
 	f = force(go,d)
 	v1.dvx += dx/d * f
 	v1.dvy += dy/d * f
+	if mode == 'two_way'
+		v1.dvx -= dx/d * f
+		v1.dvy -= dy/d * f
 
 apply_forces = (go) ->
 	# apply forces to corresponding sprites
 	# apply friction to all sprites    
 	
 	zero_velocities go
+	modes = {}
+	for f in go.forces
+		modes[f[0]+f[1]] = f[3]
+	
 	for fp in go.force_pairs
-		apply_force(go, fp[0..1], fp[2]) if fp[0]? and fp[1]?
+		m = modes[fp[0]+fp[1]]
+		apply_force(go, fp[0..1], fp[2], m) if fp[0]? and fp[1]?
 
 apply_friction = (go) ->
 	sprites = go['sprites']
