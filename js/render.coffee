@@ -43,17 +43,29 @@ window.init_graphics = (go) ->
 
 	fade_dead_sprites go
 	init_info go
+	init_msg go
 
 window.render = (go) ->
 	render_background go
 	render_sprites go
 	render_hud go
 	render_info go
+	render_msg go
 
 init_msg = (go) ->
 	if not go.msg?
 		msg = $('<div>')
+		go['msg'] = msg
+		msg.appendTo('body')
+		msg.css
+			position: 'fixed'
+			top: go.h*0.4
+			width: go.w
+			zIndex:-2
+			textAlign: 'center'
+			fontSize: 28
 
+		msg.html 'go home'
 
 init_info = (go) ->
 	if not go.info?
@@ -89,6 +101,14 @@ init_info = (go) ->
 				>> PRESS ANY KEY TO START <<<br>\
 			'
 
+render_msg = (go) ->
+	w1 = (Math.sin(go.t/100)+1)/2
+	go.msg.css
+		opacity: w1
+
+	if go.msg.css('opacity') <= 0.01
+		go.msg.html 'keep going'
+
 render_info = (go) ->
 	if go.paused
 		go.info.css
@@ -122,8 +142,8 @@ init_sprite_div = (go, name) ->
 render_background = (go) ->
 	'''
 	'''
-	w1 = (Math.sin(go.t/1000)+1)
-	w2 = (Math.cos(go.t/5000)+1)
+	w1 = (Math.sin(go.t/1000)+1)/2
+	w2 = (Math.cos(go.t/5000)+1)/2
 	c = w1*w2*240+120
 	go.bg.css
 		background: 'hsl('+c+',100%,97%)'
@@ -159,5 +179,5 @@ render_sprites = (go) ->
 
 		if s.type in ['repulsor','attractor','seed']
 			s.div.css
-				zIndex:-2
+				zIndex:-1
 

@@ -5,7 +5,7 @@ window.init_game = (w, h) ->
 	# sprite keys are unique
 	#
 	#
-	n = 1
+	n = 15
 	size = 30
 	# game objects
 	go =
@@ -29,23 +29,25 @@ window.init_game = (w, h) ->
 		max_r: size*2
 		min_r: 5
 		max_v: 20
-		max_d: 4*w
+		max_d: w*2
 		paused: true
 	
 	init_listeners go
 	init_mob_groups go
+	build_fields go
+	build_force_pairs go
 	go
 
 init_forces = (go) ->
 	# force functions accept distance and the object the force is acting on
 	[
 			[ "runner", "runner", run_run ]
-			[ "runner", "chaser", mob_mob ]
+			#[ "runner", "chaser", mob_mob ]
 			[ "chaser", "runner", mob_mob ]
 			[ "chaser", "chaser", mob_mob ]
 			[ "runner", "chaser", run_cha ]
-			[ "runner", "dante", run_pla ]
-			[ "chaser", "dante", cha_pla ]
+			[ "runner", "player", run_pla ]
+			[ "chaser", "player", cha_pla ]
 			[ "chaser", "repulsor", mob_rep ]
 			[ "runner", "repulsor", run_pla ]
 			[ "runner", "attractor", mob_att ]
@@ -63,9 +65,7 @@ mob_mob = (go,d) -> 1 * Math.pow(1 / (d+ep), 1/2)*0.6
 run_pla = (go,d) ->
 	if d < go.max_d
 		f=(0.6+Math.pow(go.sprites.dante.r/(Math.pow(go.max_r/2,1)),6))
-	else
-		f = 0
-	f
+	else f = -0.3
 
 run_cha = (go,d) -> -0.8
 run_run = (go,d) -> mob_mob(go,d)*5
@@ -92,7 +92,6 @@ init_listeners = (go) ->
 
 	# keyboard listener
 	handler = (e) ->
-		console.log e.keyCode
 		if not go.paused
 			key_map =
 				32:'repulsor'     	# space
@@ -146,6 +145,42 @@ window.update = (go) ->
 		move_sprites go
 		detect_hits go
 
+build_fields = (go) ->
+	# buiild types
+	types = []
+	for force in go.forces
+		for t in force[0..1]
+			if t not in types
+				types.push t
+	go.types = types
+
+build_force_pairs = (go) ->
+	force_pairs = []
+	for f in go.forces
+		pairs = get_pairs(go,f[0],f[1])
+		for pair in pairs
+			force_pairs.push [pair[0],pair[1],f[2]]
+	go['force_pairs'] = force_pairs
+
+add_force_pairs = (go, sprite) ->
+	# add the relevant force pairs for a sprite
+	for f in go.forces
+		if f[0] == sprite.type
+			pairs = get_pairs(go, sprite.name, f[1])
+			for pair in pairs
+				go.force_pairs.push [pair[0],pair[1],f[2]]
+		if f[1] == sprite.type
+			pairs = get_pairs(go,f[0], sprite.name)
+			for pair in pairs
+				go.force_pairs.push [pair[0],pair[1],f[2]]
+
+del_force_pairs = (go, sprite) ->
+	i = go.force_pairs.length
+	while i--
+		fp = go.force_pairs[i]
+		if sprite.name in (e.name for e in fp[0..1])
+			go.force_pairs.splice(i,1)
+
 update_sprites = (go) ->
 	sprites = go.sprites
 	for name of sprites
@@ -153,6 +188,7 @@ update_sprites = (go) ->
 		if sprite.type in ['repulsor','attractor','seed']
 			sprite.r -= 0.1
 		if sprite.r <= 0
+			del_force_pairs(go,sprites[name])
 			delete sprites[name]
 			if sprite.type == 'runner'
 				go.n_run--
@@ -176,6 +212,7 @@ spawn_mob = (go, t ) ->
 	name = t+'_'+go.t
 	if r > 5
 		go.sprites[name] = init_sprite(name,p.cx,p.cy, r, mp[t][1], t)
+		add_force_pairs(go, go.sprites[name])
 	
 restart = (go) ->
 	# clean up current level
@@ -188,6 +225,7 @@ restart = (go) ->
 	go.max_run = Math.ceil(go.max_run*1.18)
 	go.n_run = go.max_run
 	init_mob_groups go
+	build_force_pairs go
 	init_graphics go
 
 detect_hits = (go) ->
@@ -214,13 +252,15 @@ hit = (go,sprite, target) ->
 
 		if sprite.type == 'runner'
 			sprite.type = 'chaser'
+			del_force_pairs(go,sprite)
+			add_force_pairs(go,sprite)
 			sprite.img = go.colors.chaser
 			go.n_run--
 			target.r += 5
 			go.score += 5
 
 		if sprite.type == 'chaser'
-			p = target 
+			p = target
 			p.r-- if p.r > go.min_r
 			sprite.r--
 			go.score--
@@ -266,12 +306,8 @@ apply_forces = (go) ->
 	# apply friction to all sprites    
 	
 	zero_velocities go
-	forces = go['forces']
-	
-	for f in forces
-		pairs = get_pairs(go,f[0],f[1])
-		for pair in pairs
-			apply_force(go, pair, f[2]) if pair[0]? and pair[1]?
+	for fp in go.force_pairs
+		apply_force(go, fp[0..1], fp[2]) if fp[0]? and fp[1]?
 
 apply_friction = (go) ->
 	sprites = go['sprites']
@@ -280,13 +316,8 @@ apply_friction = (go) ->
 		sprite.vx *= go.friction
 		sprite.vy *= go.friction
 
-get_types = (go) ->
-	types = []
-	for sprite of go["sprites"]
-		t = go["sprites"][sprite]["type"]
-		types.push t unless types.indexOf(t) is 0
-	types
-
+get_types = (go) -> go.types
+	
 get_sprite_group = (go, group_type) ->
 	group = []
 	for name of go["sprites"]
@@ -337,8 +368,6 @@ restrict_v = (go, v) ->
 get_random_color = ->
 	letters = '0123456789ABCDEF'
 	color = '#'
-	i = 0
-	while i < 6
+	for i in [0..5]
 		color += letters[Math.floor(Math.random() * 16)]
-		i++
 	color
