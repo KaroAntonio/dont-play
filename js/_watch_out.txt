@@ -1,59 +1,72 @@
-5:02:13 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-5:02:13 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:02:48 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:02:48 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:02:49 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:03:08 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:03:15 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:03:33 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-/Users/karoantonio/Documents/git/dont-play/js/game.coffee:67:2: error: unexpected if
-	if (t == 'runner') c = go.colors[t]
-	^^
-5:05:30 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:06:01 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:06:20 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-/Users/karoantonio/Documents/git/dont-play/js/game.coffee:262:29: error: missing '
-		sprite['cy'] += sprite['vy']
-		                          ^
-5:06:56 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:07:29 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:07:41 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:08:20 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:08:27 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:11:24 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:13:03 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-/Users/karoantonio/Documents/git/dont-play/js/game.coffee:52:10: error: unexpected newline
-	chaser: 
-	        ^
-/Users/karoantonio/Documents/git/dont-play/js/game.coffee:53:10: error: unexpected newline
-	runner: 
-	        ^
-/Users/karoantonio/Documents/git/dont-play/js/game.coffee:53:10: error: unexpected newline
-	runner: 
-	        ^
-/Users/karoantonio/Documents/git/dont-play/js/game.coffee:53:10: error: unexpected newline
-	runner: 
-	        ^
-5:14:18 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:14:19 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-/Users/karoantonio/Documents/git/dont-play/js/game.coffee:26:17: error: unexpected newline
-			init_colors()
-			             ^
-5:14:57 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:15:11 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:15:46 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:19:58 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:20:45 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:21:06 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:21:35 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:21:54 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:22:01 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:22:08 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:22:09 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:22:30 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:22:33 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:22:36 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:23:29 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:23:29 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:23:46 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-5:23:48 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:58:50 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:58:50 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+12:58:55 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:58:56 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:59:02 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:59:07 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:59:12 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:59:16 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:59:41 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+12:59:53 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:00:44 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:00:56 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:01:08 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:01:14 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:01:24 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:01:36 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:01:40 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:02:05 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:02:13 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:02:16 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:02:35 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:02:38 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:02:44 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:03:01 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:03:56 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:04:00 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:05:12 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+1:05:28 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:05:34 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:07:21 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:07:45 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:08:28 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+1:13:59 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:11:58 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:12:03 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:12:09 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:12:10 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:12:18 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:12:34 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:12:42 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:12:53 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:12:58 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+/Users/karoantonio/Documents/git/dont-play/js/render.coffee:61:11: error: unexpected newline
+			width: 
+			       ^
+2:13:15 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:13:20 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:14:04 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:14:23 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:14:24 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:14:41 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:14:47 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:14:48 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:14:55 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:15:34 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:15:43 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:15:52 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:16:26 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:16:38 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:16:45 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:17:27 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:17:28 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:17:50 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:18:01 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:19:07 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:19:44 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:20:16 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:20:50 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:20:52 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:21:06 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:23:20 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+2:23:24 AM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee

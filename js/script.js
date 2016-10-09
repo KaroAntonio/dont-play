@@ -1,4 +1,3 @@
-
 var game_objs;
 
 var width = window.innerWidth,
@@ -9,13 +8,7 @@ $(document).ready(function() {
 
 	game_objs = init_game(width, height);
 	init_graphics(game_objs);
-
 	loop();
-
-	$(window).mousemove(function(evt) {
-		game_objs['mouseX'] = evt.clientX;
-		game_objs['mouseY'] = evt.clientY;
-	})
 })
 
 function loop() {
@@ -25,3 +18,5 @@ function loop() {
 
 	requestAnimationFrame(loop);	
 }
+
+

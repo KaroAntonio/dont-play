@@ -1,64 +1,141 @@
-window.init_graphics = (game_objs) ->
-  # probably only necessary if we're using html as the graphics
+window.init_graphics = (go) ->
+	# probably only necessary if we're using html as the graphics
 
-	for name of game_objs["sprites"]
-		init_sprite_div(game_objs,name)
+	for name of go["sprites"]
+		init_sprite_div(go,name)
 
-	if game_objs.hud?
-		game_objs.hud.score.remove()
+	if go.hud?
+		go.hud.score.remove()
 
+	$('body').css
+		fontFamily: 'monospace'
+	
 	score = $("<div>")
 	score.css
 		position: "fixed"
 		height: 50
 		width: 50
 		left: 25
-		top: game_objs.h-50
+		top: go.h-50
 		fontSize: 20
-		fontFamily: 'monospace'
 
-	score.appendTo $('body')
+	score.appendTo 'body'
 
-	game_objs['hud'] = { score: score }
+	go['hud'] = { score: score }
 
-	$("body").css
+	# BACKGROUND
+	$('body').css
+		position: 'fixed'
+
+	n_bg_imgs = 2
+	
+	if go.bg?
+		go.bg.remove()
+	i = Math.floor(Math.random() * n_bg_imgs)
+	bg = $("<div>")
+	bg.appendTo 'body'
+	go.bg = bg
+	bg.css
+		position: "fixed"
 		height: "100vh"
 		width: "100vw"
+		zIndex: -100
 
-window.render = (game_objs) ->
-	render_background game_objs
-	render_sprites game_objs
-	render_hud game_objs
+	fade_dead_sprites go
+	init_info go
+
+window.render = (go) ->
+	render_background go
+	render_sprites go
+	render_hud go
+	render_info go
+
+init_msg = (go) ->
+	if not go.msg?
+		msg = $('<div>')
+
+
+init_info = (go) ->
+	if not go.info?
+		info = $('<div>')
+		go['info'] = info
+		info.appendTo('body')
+		info.css
+			position: "absolute"
+			overflow: 'scroll'
+			height: go.h*0.6
+			width: go.w*0.6
+			padding: 15
+			marginTop: go.h*0.2
+			marginLeft: go.w*0.2
+			marginRight: go.w*0.2
+			marginBottom: go.w*0.2
+			fontSize: 25
+			background: '#fff'
+
+		info.html '\
+			DANTE: DONT PLAY THIS  <br>\
+			Chase the ones that run away from you, <br>\
+			run from the ones that chase you, simple ;) <br>\ 
+			The numbers on the bottom left work like: <br>\ 
+			score // life // runners left <br>\
+			<br>\
+			A: spawn a seed, warning: super growey  <br>\
+			S: spaw a repulsor, pushes things away <br>\
+			D: spa an attractor, like a mini black-hole <br>\
+			F: sp a chaser... he gonna get u <br>\
+			H: get back here 	<br>\
+			<br>\
+				>> PRESS ANY KEY TO START <<<br>\
+			'
+
+render_info = (go) ->
+	if go.paused
+		go.info.css
+			zIndex: 1
+	else
+		go.info.css
+			zIndex: -101
+
+
+fade_dead_sprites = (go) ->
+	for name of go.dead_sprites
+		s = go.dead_sprites[name]
+		if s.div?
+			s.div.css
+				opacity: s.div.css('opacity')*0.6
+				zIndex: -3
 
 init_sprite_div = (go, name) ->
-	sprite = game_objs["sprites"][name]
+	sprite = go["sprites"][name]
 	new_div = $("<div>")
 	new_div.css
 		position: "fixed"
 		height: sprite["r"]
 		width: sprite["r"]
 		fill: sprite["img"]
+		opacity: 1
 
 	$("body").append new_div
 	sprite["div"] = new_div
 
 render_background = (go) ->
 	'''
-	if go.hit_ctr > 0
-		$('body').css
-			background: go.hit_img
-	else
-		$('body').css
-			background: '#fff'
-			'''
-render_hud = (go) ->
-	go.hud.score.text(go.score)
+	'''
+	w1 = (Math.sin(go.t/1000)+1)
+	w2 = (Math.cos(go.t/5000)+1)
+	c = w1*w2*240+120
+	go.bg.css
+		background: 'hsl('+c+',100%,97%)'
 
-render_sprites = (game_objs) ->
-	for name of game_objs["sprites"]
-		s = game_objs["sprites"][name]
+render_hud = (go) ->
+	go.hud.score.text(go.score + '//'+ go.sprites.dante.r + '//' + go.n_run)
+
+render_sprites = (go) ->
+	for name of go["sprites"]
+		s = go["sprites"][name]
 		if not s.div?
-			init_sprite_div(game_objs,name)
+			init_sprite_div(go,name)
 		s["div"].css
 			background: s["img"]
 			fill: s["img"]
@@ -68,7 +145,7 @@ render_sprites = (game_objs) ->
 			width: s["r"]
 	
 		if name == 'hit'
-			p = game_objs.sprites.dante
+			p = go.sprites.dante
 			r = p.r+20
 			s.div.css
 				left: p.cx - r / 2
@@ -76,15 +153,11 @@ render_sprites = (game_objs) ->
 				height: r
 				width: r
 
-			if game_objs.hit_ctr > 0
+			if go.hit_ctr > 0
 				s.div.css
-					background: game_objs.hit_img
+					background: go.hit_img
 
-		if s.type in ['repulsor','attractor']
+		if s.type in ['repulsor','attractor','seed']
 			s.div.css
 				zIndex:-2
-
-		if name == 'dante'
-			s["div"].css
-
 
