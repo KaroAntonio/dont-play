@@ -23,7 +23,6 @@ init_three = (go) ->
 	three_div.appendTo('body')
 
 	camera = new THREE.PerspectiveCamera 90, window.innerWidth / window.innerHeight, 0.1, 10000
-	#camera = new THREE.OrthographicCamera -go.w/2, go.w/2,-go.h/2, go.h/2, 0.1, 10000
 	renderer = new THREE.WebGLRenderer
 		antialias: true
 		alpha: true
@@ -55,7 +54,7 @@ init_color = (s) ->
 		color: s.img
 		specular : s.img
 		emissive : s.img
-		shininess: 5
+		shininess: 2
 		transparent: true
 		opacity: s.opacity
 		shading: THREE.FlatShading
@@ -83,6 +82,7 @@ init_body = (go) ->
 	$('body').css
 		fontFamily: 'monospace'
 		position: 'fixed'
+		cursor: 'none'
 
 init_score = (go) ->
 	if go.hud?
@@ -135,8 +135,8 @@ init_msg = (go) ->
 			zIndex:-2
 			textAlign: 'center'
 			fontSize: 28
-
-		msg.html 'go home'
+	
+		set_msg go
 
 init_info = (go) ->
 	if not go.info?
@@ -168,17 +168,21 @@ init_info = (go) ->
 			D: spa an attractor, like a mini black-hole <br>\
 			F: sp a chaser... he gonna get u <br>\
 			H: get back here 	<br>\
+			MOUSE: move <br>\
 			<br>\
 				>> PRESS ANY KEY TO START <<<br>\
 			'
+set_msg = (go) ->
+	i = Math.floor(Math.random() * go.msgs.length)
+	go.msg.html go.msgs[i]
 
 render_msg = (go) ->
-	w1 = (Math.sin(go.t/100)+1)/2
+	w1 = (Math.sin(go.t/50)+1)/2
 	go.msg.css
 		opacity: w1
 
 	if go.msg.css('opacity') <= 0.01
-		go.msg.html 'keep going'
+		set_msg go
 
 render_info = (go) ->
 	if go.paused
@@ -192,8 +196,8 @@ fade_dead_cubes = (go) ->
 	for name of go.dead_sprites
 		s = go.dead_sprites[name]
 		if s.cube?
-			s.cube.position.z -= 5
-			s.cube.scale.z = 0.001
+			s.cube.position.z -= 20
+			s.cube.scale.z = 0.4
 			s.opacity *= 0.7
 			s.cube.material = init_color(s)
 
@@ -249,13 +253,13 @@ render_cubes = (go) ->
 			if go.hit_ctr > 0
 				cs = (s.r+20)/go.max_r
 			else
-				cs = 0
+				cs = 0.00001
 		cube.scale.set(cs,cs,cs)
 
 		if s.type in ['repulsor','attractor','seed']
 			#what to do here
-			cube.scale.z=0.0001
-			cube.position.z = -1
+			cube.scale.z=1
+			cube.position.z = -20
 
 render_sprites = (go) ->
 	for name of go["sprites"]

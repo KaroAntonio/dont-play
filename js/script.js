@@ -1,14 +1,17 @@
-var game_objs;
+var game_objs, msgs;
 
 var width = window.innerWidth,
 	height = window.innerHeight;
 
 $(document).ready(function() {
-	$('#loading').hide();
+	$.getJSON( "assets/words.json", function( msgs ) {
 
-	game_objs = init_game(width, height);
-	init_graphics(game_objs);
-	loop();
+		game_objs = init_game(width, height, msgs);
+		init_graphics(game_objs);
+
+		$('#loading').hide();
+		loop();
+	});
 })
 
 function loop() {

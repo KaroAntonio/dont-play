@@ -1,5 +1,5 @@
 # This holds all the game logic **NO DRAWING** just the logix
-window.init_game = (w, h) ->
+window.init_game = (w, h, msgs) ->
 	# initialize and return game objects	
 	# objs locations are in pixels, where the top left is 0,0
 	# sprite keys are unique
@@ -31,6 +31,7 @@ window.init_game = (w, h) ->
 		max_v: 20
 		max_d: w*2
 		paused: true
+		msgs: msgs
 	
 	init_listeners go
 	init_mob_groups go
@@ -43,6 +44,7 @@ init_forces = (go) ->
 	[
 			[ "runner", "runner", run_run, 'two_way' ]
 			[ "chaser", "runner", mob_mob, 'two_way' ]
+			[ "runner", "runner", mob_mob, 'two_way' ]
 			[ "chaser", "chaser", mob_mob, 'two_way' ]
 			[ "runner", "chaser", run_cha, 'one_way' ]
 			[ "runner", "player", run_pla, 'one_way'  ]
@@ -304,7 +306,7 @@ apply_force = (go, pair, force, mode) ->
 	dx = v1.cx - v2.cx
 	dy = v1.cy - v2.cy
 	d += 0.0000001
-	f = force(go,d)
+	f = force(go, Math.max(1,d-(v1.r/4+v2.r/4)))
 	v1.dvx += dx/d * f
 	v1.dvy += dy/d * f
 	'''

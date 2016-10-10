@@ -3,7 +3,7 @@
   var add_force_pair, add_force_pairs, apply_force, apply_forces, apply_friction, build_fields, build_force_pairs, cha_pla, del_force_pairs, detect_hits, ep, get_pairs, get_random_color, get_sprite_group, get_time, get_types, hit, init_colors, init_forces, init_listeners, init_mob_groups, init_mobs, init_sprite, init_sprites, mob_att, mob_mob, mob_rep, move_dante, move_sprites, restart, restrict_v, run_cha, run_pla, run_run, size, spawn_mob, update_sprites, zero_velocities,
     indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  window.init_game = function(w, h) {
+  window.init_game = function(w, h, msgs) {
     var go, n, size;
     n = 1;
     size = 30;
@@ -29,7 +29,8 @@
       min_r: 5,
       max_v: 20,
       max_d: w * 2,
-      paused: true
+      paused: true,
+      msgs: msgs
     };
     init_listeners(go);
     init_mob_groups(go);
@@ -39,7 +40,7 @@
   };
 
   init_forces = function(go) {
-    return [["runner", "runner", run_run, 'two_way'], ["chaser", "runner", mob_mob, 'two_way'], ["chaser", "chaser", mob_mob, 'two_way'], ["runner", "chaser", run_cha, 'one_way'], ["runner", "player", run_pla, 'one_way'], ["chaser", "player", cha_pla, 'one_way'], ["chaser", "repulsor", mob_rep, 'one_way'], ["runner", "repulsor", run_pla, 'one_way'], ["runner", "attractor", mob_att, 'one_way'], ["chaser", "attractor", mob_att, 'one_way'], ["chaser", "seed", cha_pla, 'one_way'], ["runner", "seed", cha_pla, 'one_way']];
+    return [["runner", "runner", run_run, 'two_way'], ["chaser", "runner", mob_mob, 'two_way'], ["runner", "runner", mob_mob, 'two_way'], ["chaser", "chaser", mob_mob, 'two_way'], ["runner", "chaser", run_cha, 'one_way'], ["runner", "player", run_pla, 'one_way'], ["chaser", "player", cha_pla, 'one_way'], ["chaser", "repulsor", mob_rep, 'one_way'], ["runner", "repulsor", run_pla, 'one_way'], ["runner", "attractor", mob_att, 'one_way'], ["chaser", "attractor", mob_att, 'one_way'], ["chaser", "seed", cha_pla, 'one_way'], ["runner", "seed", cha_pla, 'one_way']];
   };
 
   ep = 0.0000001;
@@ -436,7 +437,7 @@
     dx = v1.cx - v2.cx;
     dy = v1.cy - v2.cy;
     d += 0.0000001;
-    f = force(go, d);
+    f = force(go, Math.max(1, d - (v1.r / 4 + v2.r / 4)));
     v1.dvx += dx / d * f;
     v1.dvy += dy / d * f;
     return 'if mode == \'two_way\'\n	v1.dvx -= dx/d * f\n	v1.dvy -= dy/d * f';
