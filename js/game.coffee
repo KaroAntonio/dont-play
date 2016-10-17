@@ -94,6 +94,7 @@ init_listeners = (go) ->
 	# keyboard listener
 	handler = (e) ->
 		if not go.paused
+
 			key_map =
 				32:'repulsor'     	# space
 				115:'repulsor'   	# s
@@ -106,7 +107,11 @@ init_listeners = (go) ->
 			
 			if e.keyCode in [104,112]
 				go.paused = true
+				$('body').css
+					cursor: 'default'
 		else
+			$('body').css
+				cursor: 'none'
 			go.paused = false
 
 	$(document).keypress(handler)

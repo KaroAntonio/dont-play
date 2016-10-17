@@ -91,8 +91,7 @@
   init_body = function(go) {
     return $('body').css({
       fontFamily: 'monospace',
-      position: 'fixed',
-      cursor: 'none'
+      position: 'fixed'
     });
   };
 

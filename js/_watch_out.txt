@@ -1,18 +1,4 @@
-1:13:41 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-1:13:41 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-1:14:42 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
-1:15:02 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-/Users/karoantonio/Documents/git/dont-play/js/render.coffee:184:2: error: unexpected if
-	if go.msg.css('opacity') <= 0.01
-	^^
-/Users/karoantonio/Documents/git/dont-play/js/render.coffee:184:2: error: unexpected if
-	if go.msg.css('opacity') <= 0.01
-	^^
-1:15:48 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-1:16:00 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-1:17:30 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-1:18:21 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-1:18:35 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-1:18:50 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-1:30:53 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
-1:30:55 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+3:16:54 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee
+3:16:55 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+3:19:17 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/render.coffee
+3:19:20 PM - compiled /Users/karoantonio/Documents/git/dont-play/js/game.coffee

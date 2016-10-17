@@ -82,7 +82,6 @@ init_body = (go) ->
 	$('body').css
 		fontFamily: 'monospace'
 		position: 'fixed'
-		cursor: 'none'
 
 init_score = (go) ->
 	if go.hud?

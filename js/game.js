@@ -113,9 +113,15 @@
           spawn_mob(go, key_map[e.keyCode]);
         }
         if ((ref = e.keyCode) === 104 || ref === 112) {
-          return go.paused = true;
+          go.paused = true;
+          return $('body').css({
+            cursor: 'default'
+          });
         }
       } else {
+        $('body').css({
+          cursor: 'none'
+        });
         return go.paused = false;
       }
     };
