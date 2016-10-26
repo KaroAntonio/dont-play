@@ -177,7 +177,7 @@
         fontSize: 25,
         background: '#fff'
       });
-      return info.html('DANTE: DONT PLAY THIS  <br>Chase the ones that run away from you, <br>run from the ones that chase you, simple ;) <br>The numbers on the bottom left work like: <br>score // life // runners left <br><br>A: spawn a seed, warning: super growey  <br>S: spaw a repulsor, pushes things away <br>D: spa an attractor, like a mini black-hole <br>F: sp a chaser... he gonna get u <br>H: get back here 	<br>MOUSE: move <br><br>>> PRESS ANY KEY TO START <<<br>');
+      return info.html('DANTE: DONT PLAY THIS  <br>Chase the ones that run away from you, <br>run from the ones that chase you, simple ;) <br>The numbers on the bottom left work like: <br>score // life // runners left <br><br>A: spawn a seed, warning: super growey  <br>S: spaw a repulsor, pushes things away <br>D: spa an attractor, like a mini black-hole <br>F: sp a chaser... he gonna get u <br>H: Pause/Open this Menu 	<br>MOUSE: move <br><br>>> PRESS ANY KEY TO START <<<br> <br>RULES:<br> - Chasers are attracted to you. <br> - Runners are attracted to chasers and repulsed from you, <br> the bigger you get, the faster they run  away from you. <br> - You grow bigger when you eat runners and get smaller when chasers eat you. You also get smaller when you spawn attractors and repulsors. ');
     }
   };
 
